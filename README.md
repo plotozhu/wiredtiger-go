@@ -2,7 +2,8 @@
 WiredTiger for Go Lang
 
 Under development
-
+## install 
+please run `install-deps.sh` first
 ##Ready:
 - [x] Open connection
 - [x] WT_CONNECTION

@@ -14,9 +14,9 @@ int wiredtiger_cursor_close(WT_CURSOR *cursor) {
 }
 
 int wiredtiger_cursor_reconfigure(WT_CURSOR *cursor, const char *config) {
-	int ret;
+	int ret = cursor->reconfigure(cursor, config);
 
-	if(ret = cursor->reconfigure(cursor, config))
+	if( ret != 0)
 		return ret;
 
 	if ((cursor->flags & WT_CURSTD_DUMP_JSON) == 0)

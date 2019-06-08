@@ -13,13 +13,12 @@ WT_SESSION *session = NULL;
 
 
 int packtest_init() {
-	int ret;
+	int ret = wiredtiger_open(NULL, NULL, "create", &conn);
 
-	if (ret = wiredtiger_open(NULL, NULL, "create", &conn))
+	if (ret != 0 )
 		return ret;
+	return conn->open_session(conn, NULL, NULL, &session);
 
-	if (ret = conn->open_session(conn, NULL, NULL, &session))
-		return ret;
 }
 
 int packtest_deinit() {
@@ -30,18 +29,18 @@ int packtest_deinit() {
 }
 
 int packtest_intpack(int64_t v) {
-    int ret;
+    int ret = wiredtiger_struct_size(session, &buf_size, "q", v);
 
-	if(ret = wiredtiger_struct_size(session, &buf_size, "q", v))
+	if(ret )
 		return ret;
 
     return wiredtiger_struct_pack(session, buf, buf_size, "q", v);
 }
 
 int packtest_uintpack(uint64_t v) {
-    int ret;
+    int ret = wiredtiger_struct_size(session, &buf_size, "Q", v);
 
-	if(ret = wiredtiger_struct_size(session, &buf_size, "Q", v))
+	if(ret )
 		return ret;
 
     return wiredtiger_struct_pack(session, buf, buf_size, "Q", v);
@@ -59,7 +58,8 @@ int packtest_general() {
 	wti_vb2.data = vb2;
 	wti_vb2.size = 4;
 
-	if(ret = wiredtiger_struct_size(session, &buf_size, "xbBq3sSuu", -2, 2, -9223372036854775808ULL, "ABCD", "Hello", &wti_vb1, &wti_vb2))
+	ret = wiredtiger_struct_size(session, &buf_size, "xbBq3sSuu", -2, 2, -9223372036854775808ULL, "ABCD", "Hello", &wti_vb1, &wti_vb2);
+	if(ret )
 		return ret;
 
     return wiredtiger_struct_pack(session, buf, buf_size, "xbBq3sSuu",  -2, 2, -9223372036854775808ULL, "ABCD", "Hello", &wti_vb1, &wti_vb2);

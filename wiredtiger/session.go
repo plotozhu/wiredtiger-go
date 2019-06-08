@@ -18,9 +18,9 @@ const char *wiredtiger_session_strerror(WT_SESSION *session, int error) {
 }
 
 int wiredtiger_session_open_cursor(WT_SESSION *session, const char *uri, WT_CURSOR *to_dup, const char *config, WT_CURSOR **cursorp) {
-	int ret;
+	int ret= session->open_cursor(session, uri, to_dup, config, cursorp);
 
-	if(ret = session->open_cursor(session, uri, to_dup, config, cursorp))
+	if(ret  )
 		return ret;
 
 	if (((*cursorp)->flags & WT_CURSTD_DUMP_JSON) == 0)

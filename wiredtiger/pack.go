@@ -2,7 +2,7 @@ package wiredtiger
 
 /*
 #cgo CFLAGS: -I../wdlibs/libs/include
-#cgo LDFLAGS: ../wdlibs/libs/lib/wiredtiger.a
+#cgo LDFLAGS: ${SRCDIR}/../wdlibs/libs/lib/libwiredtiger.a
 #include <stdlib.h>
 #include <wiredtiger.h>
 

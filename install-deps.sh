@@ -8,9 +8,11 @@ cd $SHELL_FOLDER/wdlibs
 if [ ! -d $SHELL_FOLDER/wdlibs/wiredtiger ]; then
   git clone https://github.com/wiredtiger/wiredtiger.git
   cd  wiredtiger
+  git checkout mongodb-4.0
 else
     cd  wiredtiger
     git pull https://github.com/wiredtiger/wiredtiger.git
+    git checkout mongodb-4.0
 fi
 
 
